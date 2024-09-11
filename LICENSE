@@ -1,3 +1,50 @@
+                           simbashlog
+                  Copyright (C) 2024 Fabian Fuchs
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+-----
+
+                    Commercial and private use
+
+- Corporate use: It is permitted to use `simbashlog` in commercial or
+  private environments for infrastructure monitoring and similar
+  internal purposes. No additional consent or authorization is required.
+- Commercial products: If `simbashlog` is used as a core component in a
+  commercial product, the entire source code of the product based on
+  `simbashlog` must be disclosed and also licensed under the GPL v3.0.
+
+                      Donations and contact
+
+- It is recommended, but not required, to contact the main author of
+  `simbashlog` when using it in commercial products. A voluntary donation
+  is appreciated to support the development.
+
+For contact or further information, you can reach the author via the
+communication channels in the GitHub profile:
+https://github.com/fuchs-fabian#-lets-connect
+
+                         Important notes
+
+- Selling `simbashlog` or redistributing it without complying with the
+  GPL v3.0 terms is not permitted.
+- Any derivative works or products using `simbashlog` must be released
+  under the GPL v3.0 to ensure that the software and its modifications
+  remain open and free.
+
+-----
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
