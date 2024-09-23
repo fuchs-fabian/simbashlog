@@ -6,7 +6,7 @@
 ENABLE_TRAP_FOR_DEBUG=true # Default: false -> not recommended for production
 ENABLE_TRAP_FOR_EXIT=true
 
-# Specify the absolute path to the 'simbashlog.bash' script
+# Specify the path to the 'simbashlog.bash' script
 source ../src/simbashlog.bash
 
 # Alternatively, if 'simbashlog' is linked to '/bin/simbashlog' via a symbolic link, you can simply use the following:
