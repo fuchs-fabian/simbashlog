@@ -57,7 +57,7 @@
 # ░░                                          ░░
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
 
-declare -rx CONST_SIMBASHLOG_VERSION="1.1.1"
+declare -rx CONST_SIMBASHLOG_VERSION="1.1.2"
 declare -rx CONST_SIMBASHLOG_NAME="simbashlog"
 declare -rx CONST_SIMBASHLOG_GITHUB_LINK="https://github.com/fuchs-fabian/simbashlog"
 declare -rx CONST_SIMBASHLOG_PAYPAL_DONATE_LINK="https://www.paypal.com/donate/?hosted_button_id=4G9X8TDNYYNKG"
