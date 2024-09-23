@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# If you primarily use 'zsh' (Z shell) but have 'bash' installed,
-# it's recommended to set the shebang to #!/bin/bash
-# to ensure compatibility and avoid potential issues.
+# If you primarily use 'zsh' (Z shell) but have 'bash' installed, the above shebang should work.
+# If not, you can set the shebang to #!/bin/bash
 
 # Specify the absolute path to the 'simbashlog.bash' script
 source ../src/simbashlog.bash
