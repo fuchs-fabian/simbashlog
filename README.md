@@ -194,6 +194,8 @@ To update the script, move to the directory where the repository was cloned and 
 git pull --rebase
 ```
 
+The `simbashlog.bash` script may need to be made executable again.
+
 > ⚠️ **Important**:\
 > Do not delete the repository, as this will also break the symbolic link.\
 > If it was intended, the symbolic link must be deleted: `sudo rm /bin/simbashlog`
