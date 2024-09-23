@@ -92,6 +92,7 @@ Possible examples of "monitoring tools":
 - [Checkmk](https://checkmk.com/)
 - [Nagios](https://www.nagios.org/)
 - [Icinga](https://icinga.com/)
+- [Uptime Kuma](https://uptime.kuma.pet/)
 - [Graylog](https://graylog.org/)
 
 Possible examples of "messengers":
