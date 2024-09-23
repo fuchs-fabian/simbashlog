@@ -92,6 +92,7 @@ Possible examples of "monitoring tools":
 - [Checkmk](https://checkmk.com/)
 - [Nagios](https://www.nagios.org/)
 - [Icinga](https://icinga.com/)
+- [Uptime Kuma](https://uptime.kuma.pet/)
 - [Graylog](https://graylog.org/)
 
 Possible examples of "messengers":
@@ -156,15 +157,26 @@ Or clone `simbashlog` with HTTPS and submodules:
 git clone --recurse-submodules https://github.com/fuchs-fabian/simbashlog.git
 ```
 
-Run the following command:
+> **Notes**:
+>
+> - `</path/to>` is the path to the directory where the repository was cloned and should be replaced with the actual path.
+> - `sudo` is only necessary if it exists on the system and the script should be called from anywhere.
+
+Make the script executable:
+
+```bash
+chmod +x </path/to>/simbashlog/src/simbashlog.bash
+```
+
+Run the following command so that the script can be called from anywhere:
 
 ```bash
 sudo ln -s </path/to>/simbashlog/src/simbashlog.bash /bin/simbashlog
 ```
 
-This will create a symbolic link to the script in the `/bin` directory so that it can be called from anywhere.
+> **Note**: Do not use a relative path here, as this will break the symbolic link.
 
-`</path/to>` is the path to the directory where the repository was cloned and should be replaced with the actual path.
+This will create a symbolic link to the script in the `/bin` directory.
 
 To check whether it worked:
 

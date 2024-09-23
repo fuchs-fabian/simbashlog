@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+# If you primarily use 'zsh' (Z shell) but have 'bash' installed, the above shebang should work.
+# If not, you can set the shebang to #!/bin/bash
+
 ENABLE_TRAP_FOR_DEBUG=true # Default: false -> not recommended for production
 ENABLE_TRAP_FOR_EXIT=true
 
+# Specify the path to the 'simbashlog.bash' script
 source ../src/simbashlog.bash
+
+# Alternatively, if 'simbashlog' is linked to '/bin/simbashlog' via a symbolic link, you can simply use the following:
+# source /bin/simbashlog
 
 # Adjust the logging behavior
 ENABLE_LOG_FILE=true
