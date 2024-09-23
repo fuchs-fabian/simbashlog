@@ -4,7 +4,11 @@
 # it's recommended to set the shebang to #!/bin/bash
 # to ensure compatibility and avoid potential issues.
 
+# Specify the absolute path to the 'simbashlog.bash' script
 source ../src/simbashlog.bash
+
+# Alternatively, if 'simbashlog' is linked to '/bin/simbashlog' via a symbolic link, you can simply use the following:
+# source /bin/simbashlog
 
 # Adjust the logging behavior
 ENABLE_LOG_FILE=true
