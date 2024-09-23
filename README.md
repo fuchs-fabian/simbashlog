@@ -261,6 +261,12 @@ Usage: (sudo) simbashlog
   -m, --message           [message]               Message to be logged
 
   --notifier              [notifier]              'simbashlog' notifier (https://github.com/fuchs-fabian/simbashlog-notifiers)
+                                                  Important: The notifier must be correctly installed
+
+  --notifier-config       [notifier config]       'simbashlog' notifier configuration path
+                                                  Important: The path will be passed to the notifier
+                                                  Note: '--notifier' should be used before this, otherwise it has no effect
+                                                  Default: The default configuration file of the notifier
 
   --enable-date-in-console-output                 Enable date in console output
 
@@ -409,7 +415,8 @@ Usage: (sudo) simbashlog
 | `ENABLE_GUI_POPUPS_FOR_LOGGING_NOTIFICATIONS`              | Boolean | `true`, `false`                                               | `false`                     |
 | `LOG_POPUP_NOTIFICATION_WINDOW_WIDTH`                      | Integer | Width in pixels                                               | `500`                       |
 | `LOG_POPUP_NOTIFICATION_WINDOW_HEIGHT`                     | Integer | Height in pixels                                              | `100`                       |
-| `SIMBASHLOG_NOTIFIER`                                      | String  | Path to the notifier script (or empty)                        | Empty                       |
+| `SIMBASHLOG_NOTIFIER`                                      | String  | Path to the notifier script / notifier command (or empty)     | Empty                       |
+| `SIMBASHLOG_NOTIFIER_CONFIG_PATH`                          | String  | Path to the notifier configuration file (or empty)            | Empty                       |
 | `ENABLE_SUMMARY_ON_EXIT`                                   | Boolean | `true`, `false`                                               | `false`                     |
 
 ### Functions
