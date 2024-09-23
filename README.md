@@ -188,7 +188,11 @@ ls -l /bin/simbashlog
 simbashlog --version
 ```
 
-To update the script, move to the directory where the repository was cloned and run the following command:
+To update the script, move to the directory where the repository was cloned.
+
+Undo the executability of the `simbashlog.bash` script (`chmod -x`), otherwise the pull will show that there are changes.
+
+Run the following command:
 
 ```bash
 git pull --rebase
