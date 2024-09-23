@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# If you primarily use 'zsh' (Z shell) but have 'bash' installed,
+# it's recommended to set the shebang to #!/bin/bash
+# to ensure compatibility and avoid potential issues.
+
 source ../src/simbashlog.bash
 
 # Adjust the logging behavior

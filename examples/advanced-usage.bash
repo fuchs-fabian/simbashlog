@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# If you primarily use 'zsh' (Z shell) but have 'bash' installed,
+# it's recommended to set the shebang to #!/bin/bash
+# to ensure compatibility and avoid potential issues.
+
 ENABLE_TRAP_FOR_DEBUG=true # Default: false -> not recommended for production
 ENABLE_TRAP_FOR_EXIT=true
 
