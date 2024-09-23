@@ -32,6 +32,7 @@ LOG_POPUP_NOTIFICATION_WINDOW_WIDTH=500
 LOG_POPUP_NOTIFICATION_WINDOW_HEIGHT=100
 
 SIMBASHLOG_NOTIFIER="example-notifier.py" # This notifier does not exist -> Supported notifiers: https://github.com/fuchs-fabian/simbashlog-notifiers
+SIMBASHLOG_NOTIFIER_CONFIG_PATH=""
 
 ENABLE_SUMMARY_ON_EXIT=true # Default: false
 

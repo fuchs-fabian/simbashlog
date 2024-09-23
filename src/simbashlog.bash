@@ -57,7 +57,7 @@
 # ░░                                          ░░
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
 
-declare -rx CONST_SIMBASHLOG_VERSION="1.0.0"
+declare -rx CONST_SIMBASHLOG_VERSION="1.1.0"
 declare -rx CONST_SIMBASHLOG_NAME="simbashlog"
 declare -rx CONST_SIMBASHLOG_GITHUB_LINK="https://github.com/fuchs-fabian/simbashlog"
 declare -rx CONST_SIMBASHLOG_PAYPAL_DONATE_LINK="https://www.paypal.com/donate/?hosted_button_id=4G9X8TDNYYNKG"
@@ -390,7 +390,8 @@ declare -x LOG_POPUP_NOTIFICATION_WINDOW_WIDTH="${LOG_POPUP_NOTIFICATION_WINDOW_
 declare -x LOG_POPUP_NOTIFICATION_WINDOW_HEIGHT="${LOG_POPUP_NOTIFICATION_WINDOW_HEIGHT:=100}"
 
 # This parameter defines the name of the script that acts as the notifier.
-# It accepts various arguments:
+# It must accept the following arguments:
+# --config: The path to the configuration file.
 # --pid: The process ID.
 # --log-level: A number specifying the desired log level.
 # --message: The message to be displayed. Only used when script is called with arguments.
@@ -400,6 +401,9 @@ declare -x LOG_POPUP_NOTIFICATION_WINDOW_HEIGHT="${LOG_POPUP_NOTIFICATION_WINDOW
 # The notifier sends notifications based on the methods defined in the notifier script.
 # If `SIMBASHLOG_NOTIFIER` is empty, no notifications will be sent.
 declare -x SIMBASHLOG_NOTIFIER="${SIMBASHLOG_NOTIFIER:=""}"
+
+# This parameter defines the configuration file for the notifier.
+declare -x SIMBASHLOG_NOTIFIER_CONFIG_PATH="${SIMBASHLOG_NOTIFIER_CONFIG_PATH:=""}"
 
 # This flag controls whether the script should display a summary on exit.
 declare -x ENABLE_SUMMARY_ON_EXIT="${ENABLE_SUMMARY_ON_EXIT:=false}"
@@ -2391,6 +2395,14 @@ function _get_arguments_and_validate {
         _validate_if_value_is_long_argument "$value"
     }
 
+    local note_for_notifier="Note: '--notifier' should be used before this, otherwise it has no effect"
+    local notifier_enabled=false
+    function _is_used_without_notifier {
+        if is_false "$notifier_enabled"; then
+            _print_internal_warning "'$arg_which_is_processed': Should only be used if '--notifier' is used before, e.g. '... --notifier ... $arg_which_is_processed ...'."
+        fi
+    }
+
     local note_for_valid_actions_for_normal_logging="Note: '-a, --action' should be used before and set to 'console' 'log', 'json' or 'all', otherwise it has no effect"
     local is_normal_logging_enabled=false
     function _is_used_without_valid_action_for_normal_logging {
@@ -2431,6 +2443,10 @@ function _get_arguments_and_validate {
         fi
     }
 
+    function _print_internal_warning_for_arg_is_empty {
+        _print_internal_warning "'$arg_which_is_processed' is empty. If you don't want to use it, don't use '$arg_which_is_processed'."
+    }
+
     while [[ $# -gt 0 ]]; do
         case $1 in
         -h | --help)
@@ -2466,6 +2482,12 @@ function _get_arguments_and_validate {
             echo "  -m, --message           [message]               Message to be logged"
             echo
             echo "  --notifier              [notifier]              '$CONST_SIMBASHLOG_NAME' notifier ($CONST_SIMBASHLOG_NOTIFIERS_GITHUB_LINK)"
+            echo "                                                  Important: The notifier must be correctly installed"
+            echo
+            echo "  --notifier-config       [notifier config]       '$CONST_SIMBASHLOG_NAME' notifier configuration path"
+            echo "                                                  Important: The path will be passed to the notifier"
+            echo "                                                  $note_for_notifier"
+            echo "                                                  Default: The default configuration file of the notifier"
             echo
             echo "  --enable-date-in-console-output                 Enable date in console output"
             echo
@@ -2593,11 +2615,20 @@ function _get_arguments_and_validate {
             ! is_var_empty "$_ARG_MESSAGE" || _print_internal_error "'$arg_which_is_processed': Message must not be empty."
             ;;
         --notifier)
+            notifier_enabled=true
             arg_which_is_processed="$1"
             shift
             _validate_if_value_is_argument "$1"
             SIMBASHLOG_NOTIFIER="$1"
-            ! is_var_empty "$SIMBASHLOG_NOTIFIER" || _print_internal_warning "'$arg_which_is_processed' is empty. If you don't want to use it, don't use '$arg_which_is_processed'."
+            ! is_var_empty "$SIMBASHLOG_NOTIFIER" || _print_internal_warning_for_arg_is_empty
+            ;;
+        --notifier-config)
+            arg_which_is_processed="$1"
+            _is_used_without_notifier
+            shift
+            _validate_if_value_is_argument "$1"
+            SIMBASHLOG_NOTIFIER_CONFIG_PATH="$1"
+            ! is_var_empty "$SIMBASHLOG_NOTIFIER_CONFIG_PATH" || _print_internal_warning_for_arg_is_empty
             ;;
         --enable-date-in-console-output)
             ENABLE_DATE_IN_CONSOLE_OUTPUTS_FOR_LOGGING=true
@@ -2632,7 +2663,7 @@ function _get_arguments_and_validate {
             shift
             _validate_if_value_is_argument "$1"
             PARENT_SCRIPT_NAME="$1"
-            ! is_var_empty "$PARENT_SCRIPT_NAME" || _print_internal_warning "'$arg_which_is_processed' is empty. If you don't want to use it, don't use '$arg_which_is_processed'."
+            ! is_var_empty "$PARENT_SCRIPT_NAME" || _print_internal_warning_for_arg_is_empty
             ;;
         --enable-script-name-in-console-output)
             _is_used_without_script_name
@@ -3672,6 +3703,7 @@ fi
 
 function _notify_with_log_files {
     local notifier="$SIMBASHLOG_NOTIFIER"
+    local notifier_config="$SIMBASHLOG_NOTIFIER_CONFIG_PATH"
 
     local args_passed="$_ARGS_PASSED"
     local used_log_file="$_USED_LOG_FILE_FOR_CURRENT_ENVIRONMENT_TO_NOTIFY_WITH"
@@ -3679,7 +3711,13 @@ function _notify_with_log_files {
 
     if is_var_not_empty "$notifier"; then
         if is_true "$args_passed" || is_var_not_empty "$used_log_file" || is_var_not_empty "$used_json_log_file"; then
-            local cmd="$notifier --pid \"$CONST_CURRENT_PID\""
+            local cmd="$notifier"
+
+            if is_var_not_empty "$notifier_config"; then
+                cmd="$cmd --config \"$notifier_config\""
+            fi
+
+            cmd="$cmd --pid \"$CONST_CURRENT_PID\""
 
             if is_true "$args_passed"; then
                 local severity="$_ARG_SEVERITY"
