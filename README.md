@@ -2,20 +2,23 @@
 
 <p align="center">
   <a href="./LICENSE">
-    <img alt="GPL-3.0 License" src="https://img.shields.io/badge/GitHub-GPL--3.0-informational">
+    <img alt="GPL-3.0 License" src="https://img.shields.io/badge/GitHub-GPL--3.0-informational" />
+  </a>
+  <a href="https://github.com/fuchs-fabian/simbashlog/wiki">
+    <img alt="Wiki" src="https://img.shields.io/website?down_message=offline&label=Wiki&up_color=007aff&up_message=online&url=https%3A%2F%2Fgithub.com%2Ffuchs-fabian%2Fsimbashlog%2Fwiki" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://matrix.to/#/#simbashlog:matrix.org">
+    <img alt="Matrix" src="https://img.shields.io/badge/matrix-000000?style=for-the-badge&logo=Matrix&logoColor=white">
   </a>
 </p>
 
 <div align="center">
-  <table>
-    <tr>
-      <td>
-        <a href="https://github.com/fuchs-fabian/simbashlog">
-          <img src="https://github-readme-stats.vercel.app/api/pin/?username=fuchs-fabian&repo=simbashlog&theme=holi&hide_border=true&border_radius=10" alt="Repository simbashlog"/>
-        </a>
-      </td>
-    </tr>
-  </table>
+  <a href="https://github.com/fuchs-fabian/simbashlog">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=fuchs-fabian&repo=simbashlog&theme=holi&hide_border=true&border_radius=10" alt="Repository simbashlog" />
+  </a>
 </div>
 
 <p align="center">
@@ -110,15 +113,9 @@ A notifier can also be misused to write log information to a database or general
 Notifiers can be found in a separate repository:
 
 <div align="left">
-  <table>
-    <tr>
-      <td>
-        <a href="https://github.com/fuchs-fabian/simbashlog-notifiers">
-          <img src="https://github-readme-stats.vercel.app/api/pin/?username=fuchs-fabian&repo=simbashlog-notifiers&theme=holi&hide_border=true&border_radius=10" alt="Repository simbashlog-notifiers"/>
-        </a>
-      </td>
-    </tr>
-  </table>
+  <a href="https://github.com/fuchs-fabian/simbashlog-notifiers">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=fuchs-fabian&repo=simbashlog-notifiers&theme=holi&hide_border=true&border_radius=10" alt="Repository simbashlog-notifiers" />
+  </a>
 </div>
 
 ### What is it not?
@@ -133,6 +130,12 @@ It merely makes it possible to feed these tools with information.
 It is therefore suitable for small, medium and large companies.
 
 It does not matter if `simbashlog` is used on a Linux server, a desktop Linux system, Docker...
+
+<div align="left">
+  <a href="https://github.com/fuchs-fabian/simbashlog-debian-docker-template">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=fuchs-fabian&repo=simbashlog-debian-docker-template&theme=holi&hide_border=true&border_radius=10" alt="Repository simbashlog-debian-docker-template" />
+  </a>
+</div>
 
 ### The Goal of `simbashlog`
 
