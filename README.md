@@ -453,14 +453,15 @@ The easiest way to understand how the functions are used is to see how they are 
 
 ```bash
 log
+
+log_emerg
 log_alert
 log_crit
-log_debug
-log_emerg
 log_error
-log_info
-log_notice
 log_warn
+log_notice
+log_info
+log_debug
 ```
 
 #### 🟨 Additional functions
