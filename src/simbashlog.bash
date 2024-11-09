@@ -3849,9 +3849,13 @@ function _execute_actions_on_exit {
             echo
             echo "Version: $CONST_SIMBASHLOG_VERSION"
             echo
-            echo "If system logging has been activated, the following tag can be used to search for it:"
-            echo "$_USED_TAG_FOR_SYSTEM_LOGGING"
-            echo
+
+            if is_var_not_empty "$_USED_TAG_FOR_SYSTEM_LOGGING"; then
+                echo "Tag used for system logging:"
+                echo "$_USED_TAG_FOR_SYSTEM_LOGGING"
+                echo
+            fi
+
             print_all_log_files
             echo
             print_all_log_counters
