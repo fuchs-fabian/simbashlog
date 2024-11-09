@@ -503,7 +503,6 @@ is_array_empty
 is_array_not_empty
 is_assoc_array
 is_boolean
-is_current_script_sourced
 is_dict_empty
 is_dict_not_empty
 is_false
