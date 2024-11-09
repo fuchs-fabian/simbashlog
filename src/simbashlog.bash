@@ -57,7 +57,7 @@
 # ░░                                          ░░
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
 
-declare -rx CONST_SIMBASHLOG_VERSION="1.1.2"
+declare -rx CONST_SIMBASHLOG_VERSION="1.1.3"
 declare -rx CONST_SIMBASHLOG_NAME="simbashlog"
 declare -rx CONST_SIMBASHLOG_GITHUB_LINK="https://github.com/fuchs-fabian/simbashlog"
 declare -rx CONST_SIMBASHLOG_PAYPAL_DONATE_LINK="https://www.paypal.com/donate/?hosted_button_id=4G9X8TDNYYNKG"
@@ -1436,6 +1436,21 @@ function file_not_exists {
 # ░░                                          ░░
 # ░░                                          ░░
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
+
+# Checks if the current script was sourced.
+#
+# Returns:
+#   0 if the script was sourced.
+#   1 if the script was executed directly.
+function is_current_script_sourced {
+    if is_var_not_equal "${BASH_SOURCE[0]}" "${0}"; then
+        # The script was sourced
+        return 0
+    else
+        # The script was executed directly
+        return 1
+    fi
+}
 
 # ╔═════════════════════╦══════════════════════╗
 # ║                                            ║
@@ -3693,8 +3708,12 @@ fi
 # │                 ARG LOGIC                  │
 # └─────────────────────┴──────────────────────┘
 
-if is_true "$_ARGS_PASSED"; then
-    log "$_ARG_SEVERITY" "$_ARG_MESSAGE"
+if is_current_script_sourced; then
+    print_colored_text "'$CONST_SIMBASHLOG_NAME' detected that it was sourced." "cyan" "regular"
+else
+    if is_true "$_ARGS_PASSED"; then
+        log "$_ARG_SEVERITY" "$_ARG_MESSAGE"
+    fi
 fi
 
 # ┌─────────────────────┬──────────────────────┐
