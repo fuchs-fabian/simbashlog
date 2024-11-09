@@ -57,7 +57,7 @@
 # ░░                                          ░░
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
 
-declare -rx CONST_SIMBASHLOG_VERSION="1.1.2"
+declare -rx CONST_SIMBASHLOG_VERSION="1.1.3"
 declare -rx CONST_SIMBASHLOG_NAME="simbashlog"
 declare -rx CONST_SIMBASHLOG_GITHUB_LINK="https://github.com/fuchs-fabian/simbashlog"
 declare -rx CONST_SIMBASHLOG_PAYPAL_DONATE_LINK="https://www.paypal.com/donate/?hosted_button_id=4G9X8TDNYYNKG"
@@ -1437,6 +1437,36 @@ function file_not_exists {
 # ░░                                          ░░
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
 
+# Checks if the current script was sourced.
+#
+# Returns:
+#   0 if the script was sourced.
+#   1 if the script was executed directly.
+function is_current_script_sourced {
+    if is_var_not_equal "${BASH_SOURCE[0]}" "${0}"; then
+        # The script was sourced
+        return 0
+    else
+        # The script was executed directly
+        return 1
+    fi
+}
+
+# Works like `is_current_script_sourced`, but negates the output.
+function is_current_script_not_sourced {
+    ! is_current_script_sourced
+}
+
+# This function is essentially a renamed version of the `is_current_script_not_sourced` function.
+function is_current_script_executed_directly {
+    is_current_script_not_sourced
+}
+
+# Works like `is_current_script_executed_directly`, but negates the output.
+function is_current_script_not_executed_directly {
+    ! is_current_script_executed
+}
+
 # ╔═════════════════════╦══════════════════════╗
 # ║                                            ║
 # ║    FUNCTIONS FOR SIMPLE VARIABLE TYPES     ║
@@ -2722,14 +2752,6 @@ function _get_arguments_and_validate {
     done
 }
 
-declare -x _ARGS_PASSED=false
-
-if [[ $# -gt 0 ]]; then
-    _ARGS_PASSED=true
-    PARENT_SCRIPT_NAME=""
-    _get_arguments_and_validate "$@"
-fi
-
 # ░░░░░░░░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░░░░░░░░
 # ░░                                          ░░
 # ░░                                          ░░
@@ -3001,10 +3023,9 @@ function _get_script_information_for_logging {
     local script_name="$1"
 
     local parent_script_name="$PARENT_SCRIPT_NAME"
-    local args_passed="$_ARGS_PASSED"
 
     if is_var_not_empty "$parent_script_name"; then
-        if is_false "$args_passed"; then
+        if is_current_script_sourced; then
             echo "'$parent_script_name' -> '$script_name'"
         else
             echo "'$parent_script_name'"
@@ -3072,7 +3093,6 @@ function _get_log_dir_for_current_script {
     local parent_script="$PARENT_SCRIPT_NAME"
     local parent_script_path=""
 
-    local args_passed="$_ARGS_PASSED"
     local enable_simple_log_dir_structure="$ENABLE_SIMPLE_LOG_DIR_STRUCTURE"
     local log_dir="$LOG_DIR"
 
@@ -3082,7 +3102,7 @@ function _get_log_dir_for_current_script {
 
     local current_script_log_dir
 
-    if is_false "$args_passed"; then
+    if is_current_script_sourced; then
         if is_true "$enable_simple_log_dir_structure"; then
             # Use the script's name without extension as the directory name
             current_script_log_dir="${log_dir}${parent_script_path}${CONST_SIMPLE_SCRIPT_NAME_WITHOUT_FILE_EXTENSION}/"
@@ -3102,10 +3122,8 @@ function _get_log_dir_for_current_script {
 # └─────────────────────┴──────────────────────┘
 
 function _get_log_file_without_suffix {
-    local args_passed="$_ARGS_PASSED"
-
     local log_file_prefix_for_current_script=""
-    if is_false "$args_passed"; then
+    if is_current_script_sourced; then
         log_file_prefix_for_current_script="${_CONST_DATE_AND_TIME_FOR_LOG_FILE}_${CONST_SIMPLE_SCRIPT_NAME_WITHOUT_FILE_EXTENSION}"
     else
         local parent_script_name="$PARENT_SCRIPT_NAME"
@@ -3379,7 +3397,7 @@ function _print_log_message {
         prefix="$timestamp"
     fi
 
-    if is_false "$_ARGS_PASSED"; then
+    if is_current_script_sourced; then
         local script_name=""
         case "$SHOW_CURRENT_SCRIPT_NAME_IN_CONSOLE_OUTPUTS_FOR_LOGGING" in
         "path")
@@ -3513,7 +3531,7 @@ function log {
     local severity="$1"
     local message="$2"
 
-    if is_false "$_ARGS_PASSED"; then
+    if is_current_script_sourced; then
         _validate_user_input_for_logging
     fi
 
@@ -3690,11 +3708,18 @@ fi
 # ╚═════════════════════╩══════════════════════╝
 
 # ┌─────────────────────┬──────────────────────┐
-# │                 ARG LOGIC                  │
+# │                   LOGIC                    │
 # └─────────────────────┴──────────────────────┘
 
-if is_true "$_ARGS_PASSED"; then
-    log "$_ARG_SEVERITY" "$_ARG_MESSAGE"
+if is_current_script_sourced; then
+    print_colored_text "'$CONST_SIMBASHLOG_NAME' detected that it was sourced." "cyan" "regular"
+else
+    if [[ $# -gt 0 ]]; then
+        PARENT_SCRIPT_NAME=""
+        _get_arguments_and_validate "$@"
+
+        log "$_ARG_SEVERITY" "$_ARG_MESSAGE"
+    fi
 fi
 
 # ┌─────────────────────┬──────────────────────┐
@@ -3705,12 +3730,11 @@ function _notify_with_log_files {
     local notifier="$SIMBASHLOG_NOTIFIER"
     local notifier_config="$SIMBASHLOG_NOTIFIER_CONFIG_PATH"
 
-    local args_passed="$_ARGS_PASSED"
     local used_log_file="$_USED_LOG_FILE_FOR_CURRENT_ENVIRONMENT_TO_NOTIFY_WITH"
     local used_json_log_file="$_USED_JSON_LOG_FILE_FOR_CURRENT_ENVIRONMENT_TO_NOTIFY_WITH"
 
     if is_var_not_empty "$notifier"; then
-        if is_true "$args_passed" || is_var_not_empty "$used_log_file" || is_var_not_empty "$used_json_log_file"; then
+        if is_current_script_executed_directly || is_var_not_empty "$used_log_file" || is_var_not_empty "$used_json_log_file"; then
             local cmd="$notifier"
 
             if is_var_not_empty "$notifier_config"; then
@@ -3719,7 +3743,7 @@ function _notify_with_log_files {
 
             cmd="$cmd --pid \"$CONST_CURRENT_PID\""
 
-            if is_true "$args_passed"; then
+            if is_current_script_executed_directly; then
                 local severity="$_ARG_SEVERITY"
 
                 local severity_code
@@ -3805,7 +3829,7 @@ function _execute_actions_on_exit {
     _notify_with_log_files
 
     if is_true "$ENABLE_SUMMARY_ON_EXIT"; then
-        if is_true "$_ARGS_PASSED"; then
+        if is_current_script_executed_directly; then
             print_all_log_files
         else
             local color="blue"
@@ -3825,9 +3849,13 @@ function _execute_actions_on_exit {
             echo
             echo "Version: $CONST_SIMBASHLOG_VERSION"
             echo
-            echo "If system logging has been activated, the following tag can be used to search for it:"
-            echo "$_USED_TAG_FOR_SYSTEM_LOGGING"
-            echo
+
+            if is_var_not_empty "$_USED_TAG_FOR_SYSTEM_LOGGING"; then
+                echo "Tag used for system logging:"
+                echo "$_USED_TAG_FOR_SYSTEM_LOGGING"
+                echo
+            fi
+
             print_all_log_files
             echo
             print_all_log_counters
