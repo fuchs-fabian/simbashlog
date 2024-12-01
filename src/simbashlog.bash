@@ -2744,7 +2744,9 @@ function _get_arguments_and_validate {
             ;;
         *)
             if [[ "$1" == "-"* ]]; then
-                _print_internal_error "Invalid argument: '$1'"
+                _print_internal_error "Invalid option: '$1'. $message_with_help_information"
+            else
+                _print_internal_error "Invalid argument: '$1'. $message_with_help_information"
             fi
             ;;
         esac
