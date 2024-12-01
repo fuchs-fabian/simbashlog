@@ -148,6 +148,23 @@ There should be no fixed connection in the code, but it should simply be possibl
 
 ## Getting Started
 
+`simbashlog` does not need to be installed. It can simply be sourced as a script or executed directly. Nevertheless, the following shows a few ways in which you can get started with `simbashlog`.
+
+### Installation
+
+> ⚠️ **Important**:
+>
+> It is recommended to install `simbashlog` for all users to avoid problems.\
+> If this is not desired and it is only required for the current user, `/usr/bin/` should be replaced by `$HOME/.local/bin/`
+
+Move to the directory where the script should be cloned. For example:
+
+```bash
+cd /opt/
+```
+
+> If it is only for the current user, the directory could be replaced by `$HOME/.local/share/`.
+
 Clone `simbashlog` with HTTPS:
 
 ```bash
@@ -174,17 +191,17 @@ chmod +x </path/to>/simbashlog/src/simbashlog.bash
 Run the following command so that the script can be called from anywhere:
 
 ```bash
-sudo ln -s </path/to>/simbashlog/src/simbashlog.bash /bin/simbashlog
+sudo ln -s </path/to>/simbashlog/src/simbashlog.bash /usr/bin/simbashlog
 ```
 
 > **Note**: Do not use a relative path here, as this will break the symbolic link.
 
-This will create a symbolic link to the script in the `/bin` directory.
+This will create a symbolic link to the script in the `/usr/bin/` directory.
 
 To check whether it worked:
 
 ```bash
-ls -l /bin/simbashlog
+ls -l /usr/bin/simbashlog
 ```
 
 ```bash
@@ -193,7 +210,7 @@ simbashlog --version
 
 To update the script, move to the directory where the repository was cloned.
 
-Undo the executability of the `simbashlog.bash` script (`chmod -x`), otherwise the pull will show that there are changes.
+**Undo the executability of the `simbashlog.bash` script (`chmod -x`), otherwise the pull will show that there are changes and it will not work!**
 
 Run the following command:
 
@@ -201,11 +218,12 @@ Run the following command:
 git pull --rebase
 ```
 
-The `simbashlog.bash` script may need to be made executable again.
+The `simbashlog.bash` script may need to be made **executable again**.
 
-> ⚠️ **Important**:\
+> ⚠️ **Important**:
+>
 > Do not delete the repository, as this will also break the symbolic link.\
-> If it was intended, the symbolic link must be deleted: `sudo rm /bin/simbashlog`
+> If it was intended, the symbolic link must be deleted: `sudo rm /usr/bin/simbashlog`
 
 ### Submodule
 

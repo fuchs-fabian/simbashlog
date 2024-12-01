@@ -216,13 +216,13 @@ declare -x ENABLE_LOG_TO_SYSTEM="${ENABLE_LOG_TO_SYSTEM:=false}"
 #
 # Default structure:
 #
-# Script 1: `/bin/script1.sh`
+# Script 1: `/usr/bin/script1.sh`
 # Script 2: `/home/test/script1.sh`
 # Script 3: `/home/test/script2.sh`
 #
 # /tmp/simbashlogs/ -> `LOG_DIR`
 # │
-# ├── bin/
+# ├── usr/bin/
 # │    │
 # │    └── script1/ -> log-files
 # │
@@ -240,7 +240,7 @@ declare -x LOG_DIR="${LOG_DIR:="$CONST_SIMBASHLOG_LOG_DIR"}"
 #
 # Simplified structure:
 #
-# Script 1: `/bin/script1.sh`
+# Script 1: `/usr/bin/script1.sh`
 # Script 2: `/home/test/script1.sh`
 # Script 3: `/home/test/script2.sh`
 #
