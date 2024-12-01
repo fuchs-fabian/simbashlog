@@ -30,7 +30,7 @@
 #
 # e.g.:
 # ```bash
-# ./simbashlog.bash -a json -s error --message "An error occured" --notifier example-simbashlog-notifier.py
+# ./simbashlog.bash -a json -s error --message "An error occured" --notifier simbashlog-example-notifier
 # ```
 #
 # To summarize briefly:

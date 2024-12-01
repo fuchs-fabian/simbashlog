@@ -30,7 +30,7 @@ ENABLE_PARENT_SCRIPT_NAME_IN_CONSOLE_OUTPUTS_FOR_LOGGING=false
 
 ENABLE_GUI_POPUPS_FOR_LOGGING_NOTIFICATIONS=false
 
-SIMBASHLOG_NOTIFIER="example-notifier.py" # This notifier does not exist -> Supported notifiers: https://github.com/fuchs-fabian/simbashlog-notifiers
+SIMBASHLOG_NOTIFIER="simbashlog-example-notifier" # This notifier does not exist -> Supported notifiers: https://github.com/fuchs-fabian/simbashlog-notifiers
 SIMBASHLOG_NOTIFIER_CONFIG_PATH=""
 
 ENABLE_SUMMARY_ON_EXIT=true # Default: false
