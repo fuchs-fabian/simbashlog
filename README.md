@@ -365,9 +365,19 @@ Usage: (sudo) simbashlog
 
 ### Console output
 
+> **Note**: There is an internal `simbashlog` warning, because the `simbashlog-example-notifier` is not installed.
+
 ![normal usage console output](./images/normal-usage-console-ouput.png)
 
 ### System log content
+
+Command with `journalctl`:
+
+```bash
+journalctl -t <tag>
+```
+
+Replace `<tag>` with the actual tag from the `simbashlog` **summary**.
 
 ![normal usage system log content](./images/normal-usage-system-log-content.png)
 
